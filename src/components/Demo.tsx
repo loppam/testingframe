@@ -105,7 +105,9 @@ export default function Demo(
     const load = async () => {
       const context = await sdk.context;
       setContext(context);
-      setAdded(context.client.added);
+      if (context?.client) {
+        setAdded(context.client.added);
+      }
 
       sdk.on("frameAdded", ({ notificationDetails }) => {
         setLastEvent(
