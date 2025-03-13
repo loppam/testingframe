@@ -3,5 +3,10 @@
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
     "hardhat": "^2.22.19"
+  },
+  "dependencies": {
+    "@upstash/redis": "^1.34.5",
+    "@vercel/og": "^0.6.5",
+    "next": "^15.2.2"
   }
 }
