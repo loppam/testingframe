@@ -1,7 +1,9 @@
-import { ethers } from "hardhat";
+import { task } from "hardhat/config";
+import "@nomicfoundation/hardhat-ethers";
+import { HardhatEthersSigner } from "@nomicfoundation/hardhat-ethers/signers";
 
-async function main() {
-  const [deployer] = await ethers.getSigners();
+task("deploy", "Deploys the contracts").setAction(async (_, { ethers }) => {
+  const [deployer]: HardhatEthersSigner[] = await ethers.getSigners();
   console.log("Deploying contracts with account:", await deployer.getAddress());
 
   // Deploy GameCharacterNFT
@@ -45,11 +47,4 @@ async function main() {
   );
 
   console.log("Initial setup complete!");
-}
-
-main()
-  .then(() => process.exit(0))
-  .catch((error) => {
-    console.error(error);
-    process.exit(1);
-  });
+});

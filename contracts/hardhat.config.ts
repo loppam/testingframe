@@ -1,9 +1,11 @@
 import { HardhatUserConfig } from "hardhat/config";
+import "@nomicfoundation/hardhat-ethers";
 import "@nomicfoundation/hardhat-toolbox";
 import "@nomicfoundation/hardhat-ignition";
 import * as dotenv from "dotenv";
 import * as fs from "fs";
 import * as path from "path";
+import "./scripts/deploy"; // Import the deploy task
 
 dotenv.config();
 
