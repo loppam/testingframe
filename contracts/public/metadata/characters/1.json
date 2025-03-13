@@ -1,0 +1,19 @@
+{
+  "name": "Default Dino",
+  "description": "A unique character for the TestingFrame game with ID 1",
+  "image": "https://testingframe-iota.vercel.app/sprites/default-dino.png",
+  "attributes": [
+    {
+      "trait_type": "Jump Height",
+      "value": 15
+    },
+    {
+      "trait_type": "Width",
+      "value": 60
+    },
+    {
+      "trait_type": "Height",
+      "value": 60
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "Default Theme",
+  "description": "A unique theme for the TestingFrame game with ID 1",
+  "image": "https://testingframe-iota.vercel.app/themes/default-background.png",
+  "attributes": [
+    {
+      "trait_type": "Obstacle Width",
+      "value": 40
+    },
+    {
+      "trait_type": "Obstacle Height",
+      "value": 80
+    },
+    {
+      "trait_type": "Obstacle Gap",
+      "value": 150
+    },
+    {
+      "trait_type": "Obstacle Image",
+      "value": "https://testingframe-iota.vercel.app/themes/default-obstacle.png"
+    }
+  ]
+}
