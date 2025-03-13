@@ -1,7 +1,6 @@
 import React from "react";
 import Image from "next/image";
 import { Obstacle as ObstacleType } from "~/lib/game/types";
-import { GAME_CONFIG } from "~/lib/game/constants";
 
 interface ObstacleProps {
   obstacle: ObstacleType;

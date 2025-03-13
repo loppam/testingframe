@@ -2,7 +2,6 @@
   "name": "frames-v2-demo",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -11,6 +10,7 @@
   },
   "dependencies": {
     "@farcaster/auth-kit": "^0.6.0",
+    "@farcaster/core": "^0.15.6",
     "@farcaster/frame-core": "^0.0.29",
     "@farcaster/frame-node": "^0.0.18",
     "@farcaster/frame-sdk": "^0.0.31",
