@@ -1,12 +1,14 @@
 {
-  "name": "hardhat-project",
-  "devDependencies": {
-    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
-    "hardhat": "^2.22.19"
+  "name": "testingframe-contracts",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test"
   },
-  "dependencies": {
-    "@upstash/redis": "^1.34.5",
-    "@vercel/og": "^0.6.5",
-    "next": "^15.2.2"
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ethers": "^3.0.8",
+    "ethers": "^6.13.5"
   }
 }

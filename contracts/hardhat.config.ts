@@ -1,9 +1,19 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
+import "@nomicfoundation/hardhat-ignition";
 import * as dotenv from "dotenv";
-import { resolve } from "path";
+import fs from "fs";
+import path from "path";
 
 dotenv.config();
+
+// Add a task to copy artifacts to the Next.js app
+const nextArtifactsPath = "../src/lib/contracts/abis";
+
+// Ensure the Next.js artifacts directory exists
+if (!fs.existsSync(path.join(__dirname, nextArtifactsPath))) {
+  fs.mkdirSync(path.join(__dirname, nextArtifactsPath), { recursive: true });
+}
 
 const config: HardhatUserConfig = {
   solidity: "0.8.20",
@@ -15,10 +25,10 @@ const config: HardhatUserConfig = {
     },
   },
   paths: {
-    sources: resolve(__dirname, "../src/contracts"),
+    sources: "./contracts",
     tests: "./test",
     cache: "./cache",
-    artifacts: resolve(__dirname, "../src/lib/contracts/abis"),
+    artifacts: path.join(__dirname, nextArtifactsPath),
   },
 };
 

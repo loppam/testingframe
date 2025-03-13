@@ -1,7 +1,8 @@
 import { ethers } from "hardhat";
 
 async function main() {
-  console.log("Deploying contracts...");
+  const [deployer] = await ethers.getSigners();
+  console.log("Deploying contracts with account:", await deployer.getAddress());
 
   // Deploy GameCharacterNFT
   const GameCharacterNFT = await ethers.getContractFactory("GameCharacterNFT");
