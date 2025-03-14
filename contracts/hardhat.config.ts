@@ -1,4 +1,4 @@
-import { HardhatUserConfig } from "hardhat/config";
+import { HardhatUserConfig, task } from "hardhat/config";
 import "@nomicfoundation/hardhat-ethers";
 import "@nomicfoundation/hardhat-toolbox";
 import "@nomicfoundation/hardhat-ignition";
@@ -17,6 +17,26 @@ if (!fs.existsSync(path.join(__dirname, nextArtifactsPath))) {
   fs.mkdirSync(path.join(__dirname, nextArtifactsPath), { recursive: true });
 }
 
+// Add a task to copy and flatten ABI files
+task("copy-abis", "Copies ABI files to the Next.js app").setAction(
+  async (_, { artifacts }) => {
+    const contracts = {
+      GameCharacterNFT:
+        "contracts/contracts/GameCharacterNFT.sol:GameCharacterNFT",
+      GameThemeNFT: "contracts/contracts/GameThemeNFT.sol:GameThemeNFT",
+    };
+
+    for (const [name, fullPath] of Object.entries(contracts)) {
+      const artifact = await artifacts.readArtifact(fullPath);
+      fs.writeFileSync(
+        path.join(__dirname, nextArtifactsPath, `${name}.json`),
+        JSON.stringify(artifact.abi, null, 2)
+      );
+      console.log(`Copied ${name} ABI to ${nextArtifactsPath}`);
+    }
+  }
+);
+
 const config: HardhatUserConfig = {
   solidity: "0.8.20",
   networks: {
@@ -30,7 +50,7 @@ const config: HardhatUserConfig = {
     sources: "./contracts",
     tests: "./test",
     cache: "./cache",
-    artifacts: path.join(__dirname, nextArtifactsPath),
+    artifacts: "./artifacts", // Store artifacts in local directory first
   },
 };
 
