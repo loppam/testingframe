@@ -1,29 +1,31 @@
-import { ethers } from "ethers";
+import { ethers, Provider, Signer, BigNumberish } from "ethers";
 import { Character, Theme } from "../game/types";
+import { GameCharacterNFT, GameThemeNFT } from "../../typechain-types";
 
 // Contract ABIs will be generated and imported from here
-import GameCharacterNFTAbi from "./abis/GameCharacterNFT.json";
-import GameThemeNFTAbi from "./abis/GameThemeNFT.json";
+import GameCharacterNFTArtifact from "./abis/GameCharacterNFT.json";
+import GameThemeNFTArtifact from "./abis/GameThemeNFT.json";
 
 export class GameContracts {
-  private characterContract: ethers.Contract;
-  private themeContract: ethers.Contract;
+  private characterContract: GameCharacterNFT;
+  private themeContract: GameThemeNFT;
 
   constructor(
-    provider: ethers.Provider,
+    provider: Provider,
     characterAddress: string,
     themeAddress: string
   ) {
     this.characterContract = new ethers.Contract(
       characterAddress,
-      GameCharacterNFTAbi,
+      GameCharacterNFTArtifact.abi,
       provider
-    );
+    ) as unknown as GameCharacterNFT;
+
     this.themeContract = new ethers.Contract(
       themeAddress,
-      GameThemeNFTAbi,
+      GameThemeNFTArtifact.abi,
       provider
-    );
+    ) as unknown as GameThemeNFT;
   }
 
   // Character NFT methods
@@ -31,7 +33,7 @@ export class GameContracts {
     const balance = await this.characterContract.balanceOf(address);
     const characters: Character[] = [];
 
-    for (let i = 0; i < balance; i++) {
+    for (let i = 0; i < Number(balance); i++) {
       const tokenId = await this.characterContract.tokenOfOwnerByIndex(
         address,
         i
@@ -44,10 +46,10 @@ export class GameContracts {
         id: i,
         tokenId: tokenId.toString(),
         name: attrs.name,
-        jumpHeight: attrs.jumpHeight.toNumber(),
+        jumpHeight: Number(attrs.jumpHeight),
         size: {
-          width: attrs.width.toNumber(),
-          height: attrs.height.toNumber(),
+          width: Number(attrs.width),
+          height: Number(attrs.height),
         },
         sprite: attrs.spriteURI,
       });
@@ -56,8 +58,8 @@ export class GameContracts {
     return characters;
   }
 
-  async mintCharacter(signer: ethers.Signer): Promise<void> {
-    const contract = this.characterContract.connect(signer);
+  async mintCharacter(signer: Signer): Promise<void> {
+    const contract = this.characterContract.connect(signer) as GameCharacterNFT;
     const tx = await contract.mint({ value: ethers.parseEther("0.01") });
     await tx.wait();
   }
@@ -67,7 +69,7 @@ export class GameContracts {
     const balance = await this.themeContract.balanceOf(address);
     const themes: Theme[] = [];
 
-    for (let i = 0; i < balance; i++) {
+    for (let i = 0; i < Number(balance); i++) {
       const tokenId = await this.themeContract.tokenOfOwnerByIndex(address, i);
       const attrs = await this.themeContract.getThemeAttributes(tokenId);
 
@@ -89,8 +91,8 @@ export class GameContracts {
     return themes;
   }
 
-  async mintTheme(signer: ethers.Signer): Promise<void> {
-    const contract = this.themeContract.connect(signer);
+  async mintTheme(signer: Signer): Promise<void> {
+    const contract = this.themeContract.connect(signer) as GameThemeNFT;
     const tx = await contract.mint({ value: ethers.parseEther("0.01") });
     await tx.wait();
   }

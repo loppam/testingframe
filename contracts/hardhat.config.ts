@@ -11,6 +11,7 @@ dotenv.config();
 
 // Add a task to copy artifacts to the Next.js app
 const nextArtifactsPath = "../src/lib/contracts/abis";
+const nextTypesPath = "../src/typechain-types";
 
 // Ensure the Next.js artifacts directory exists
 if (!fs.existsSync(path.join(__dirname, nextArtifactsPath))) {
@@ -29,6 +30,14 @@ task("copy-abis", "Copies ABI files to the Next.js app").setAction(
       console.log(`Cleaned old ABIs from ${nextArtifactsPath}`);
     }
 
+    // Clean up old types
+    if (fs.existsSync(path.join(__dirname, nextTypesPath))) {
+      fs.rmSync(path.join(__dirname, nextTypesPath), { recursive: true });
+      console.log(`Cleaned old types from ${nextTypesPath}`);
+    }
+    // Ensure types directory exists
+    fs.mkdirSync(path.join(__dirname, nextTypesPath), { recursive: true });
+
     const contracts = {
       GameCharacterNFT:
         "contracts/contracts/GameCharacterNFT.sol:GameCharacterNFT",
@@ -37,12 +46,21 @@ task("copy-abis", "Copies ABI files to the Next.js app").setAction(
 
     for (const [name, fullPath] of Object.entries(contracts)) {
       const artifact = await artifacts.readArtifact(fullPath);
+      // Copy the full artifact instead of just the ABI
       fs.writeFileSync(
         path.join(__dirname, nextArtifactsPath, `${name}.json`),
-        JSON.stringify(artifact.abi, null, 2)
+        JSON.stringify(artifact, null, 2)
       );
-      console.log(`Copied ${name} ABI to ${nextArtifactsPath}`);
+      console.log(`Copied ${name} artifact to ${nextArtifactsPath}`);
     }
+
+    // Copy TypeChain types
+    fs.cpSync(
+      path.join(__dirname, "typechain-types"),
+      path.join(__dirname, nextTypesPath),
+      { recursive: true }
+    );
+    console.log(`Copied TypeChain types to ${nextTypesPath}`);
   }
 );
 
