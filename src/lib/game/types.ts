@@ -37,8 +37,8 @@ export interface GameState {
   gravity: number;
   characterY: number;
   obstacles: Obstacle[];
-  currentCharacter: any | null;
-  currentTheme: any | null;
+  currentCharacter: Character | null;
+  currentTheme: Theme | null;
 }
 
 export interface Obstacle {
@@ -53,7 +53,7 @@ export type GameAction =
   | { type: "END_GAME" }
   | { type: "JUMP" }
   | { type: "UPDATE_SCORE"; payload: number }
-  | { type: "SET_CHARACTER"; payload: any }
-  | { type: "SET_THEME"; payload: any }
+  | { type: "SET_CHARACTER"; payload: Character }
+  | { type: "SET_THEME"; payload: Theme }
   | { type: "UPDATE_OBSTACLES" }
   | { type: "RESET_GAME" };
