@@ -20,6 +20,15 @@ if (!fs.existsSync(path.join(__dirname, nextArtifactsPath))) {
 // Add a task to copy and flatten ABI files
 task("copy-abis", "Copies ABI files to the Next.js app").setAction(
   async (_, { artifacts }) => {
+    // Clean up old ABIs
+    if (fs.existsSync(path.join(__dirname, nextArtifactsPath))) {
+      fs.rmSync(path.join(__dirname, nextArtifactsPath), { recursive: true });
+      fs.mkdirSync(path.join(__dirname, nextArtifactsPath), {
+        recursive: true,
+      });
+      console.log(`Cleaned old ABIs from ${nextArtifactsPath}`);
+    }
+
     const contracts = {
       GameCharacterNFT:
         "contracts/contracts/GameCharacterNFT.sol:GameCharacterNFT",
