@@ -79,12 +79,15 @@ export class GameContracts {
         name: attrs.name,
         background: attrs.backgroundURI,
         obstacleSprite: attrs.obstacleURI,
-        groundSprite: attrs.groundURI,
+        groundSprite: "",
         colorScheme: {
-          primary: attrs.colorScheme.primary,
-          secondary: attrs.colorScheme.secondary,
-          accent: attrs.colorScheme.accent,
+          primary: "#000000",
+          secondary: "#000000",
+          accent: "#000000",
         },
+        obstacleWidth: Number(attrs.obstacleWidth),
+        obstacleHeight: Number(attrs.obstacleHeight),
+        obstacleGap: Number(attrs.obstacleGap),
       });
     }
 

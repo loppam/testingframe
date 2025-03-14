@@ -14,14 +14,18 @@ export interface Theme {
   id: number;
   tokenId: string;
   name: string;
-  background: string;
-  obstacleSprite: string;
-  groundSprite: string;
+  background: string; // maps to backgroundURI
+  obstacleSprite: string; // maps to obstacleURI
+  groundSprite: string; // optional, not in contract
   colorScheme: {
+    // optional, not in contract
     primary: string;
     secondary: string;
     accent: string;
   };
+  obstacleWidth?: number; // from contract
+  obstacleHeight?: number; // from contract
+  obstacleGap?: number; // from contract
 }
 
 export interface GameState {
