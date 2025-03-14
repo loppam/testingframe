@@ -1,4 +1,4 @@
-import { ethers, Provider, Signer, BigNumberish } from "ethers";
+import { ethers, Provider, Signer } from "ethers";
 import { Character, Theme } from "../game/types";
 import { GameCharacterNFT, GameThemeNFT } from "../../typechain-types";
 
