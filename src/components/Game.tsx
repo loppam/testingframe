@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef, useReducer, useCallback } from "react";
 import { GameState, GameAction, Obstacle } from "@/lib/game/types";
 
